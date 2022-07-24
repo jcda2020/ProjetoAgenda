@@ -7,7 +7,7 @@ import java.util.Objects;
  * a fim de transmiti-los em rede etc.
   */
 
-public class User implements Serializable{
+public class Users implements Serializable{
 	/**
 	 * Geração da versão da serialização dos dados desta classe
 	 * a fim facilitar a comunicação de programas que utilizam versões diferente do Java
@@ -22,11 +22,11 @@ public class User implements Serializable{
 	private String password;
 	
 	//Construtor sem parâmetros, pois permitiremos criar um objeto sem passar seus atributos
-	public User() {
+	public Users() {
 		
 	}
    //Construtor com três parâmetros afim de passar valores aos atributos do objeto
-	public User(String nome, String userName, String password, Integer id) {		
+	public Users(String nome, String userName, String password, Integer id) {		
 		this.nome = nome;
 		this.userName = userName;
 		this.password = password;
@@ -74,7 +74,7 @@ public class User implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Users other = (Users) obj;
 		return Objects.equals(nome, other.nome) && Objects.equals(password, other.password)
 				&& Objects.equals(userName, other.userName)&& Objects.equals(id, other.id);
 	}

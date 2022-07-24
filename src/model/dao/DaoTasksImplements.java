@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.mysql.cj.jdbc.StatementImpl;
 
+import dao.DaoFactory;
 import dao.DaoTasks;
 import db.DB;
 import db.DbException;
@@ -30,14 +31,14 @@ public class DaoTasksImplements implements DaoTasks{
 	@Override
 	public void insertTasks(Tasks tasks) {
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO tasks (titulo, descricao, data) VALUES "
-				+ "(?, ?, ?)";
-		Tasks task = new Tasks();
+		String sql = "INSERT INTO tasks (titulo, descricao) VALUES "
+				+ "(?, ?)";
+		
 		try {
 			stmt = conn.prepareStatement(sql, StatementImpl.RETURN_GENERATED_KEYS);
-			stmt.setString(1,task.getTitulo() );
-			stmt.setString(2,task.getDescricao() );
-			stmt.setDate(3, (java.sql.Date) task.getDataDaTarefa());
+			stmt.setString(1,tasks.getTitulo() );
+			stmt.setString(2,tasks.getDescricao() );
+			//stmt.setDate(3, (java.sql.Date) task.getDataDaTarefa());
 			
 			int linhaAfetada = stmt.executeUpdate();		
 			
@@ -45,7 +46,6 @@ public class DaoTasksImplements implements DaoTasks{
 				ResultSet rs = stmt.getGeneratedKeys();
 				if(rs.next()) {
 					int id = rs.getInt(1);
-					task.setId(id);
 					System.out.println("Tarefa adicionada com sucesso!");					
 				}
 				
@@ -217,16 +217,17 @@ public class DaoTasksImplements implements DaoTasks{
 
 	@Override
 	public void doneTask(Integer id) {
-	Tasks task = new DaoTasksImplements().findById(id);
+	Tasks task = new Tasks();		
+		
 	task.setDoneTask(true);
-	Integer ID = task.getId();
 	
-	String sql = "UPDATE task SET  done = ? WHERE id = ?";
+	
+	String sql = "UPDATE tasks SET  done = ? WHERE id = ?";
 	PreparedStatement stmt = null;
 	try {
 		stmt = conn.prepareStatement(sql);
 		stmt.setBoolean(1, task.getDoneTask());
-		stmt.setInt(2, ID);
+		stmt.setInt(2, id);
 		
 		int linhasAfetadas =  stmt.executeUpdate();
 		
