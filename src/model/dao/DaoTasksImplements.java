@@ -13,6 +13,7 @@ import dao.DaoTasks;
 import db.DB;
 import db.DbException;
 import model.entities.Tasks;
+import model.entities.Users;
 
 public class DaoTasksImplements implements DaoTasks{
 
@@ -31,14 +32,16 @@ public class DaoTasksImplements implements DaoTasks{
 	@Override
 	public void insertTasks(Tasks tasks) {
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO tasks (titulo, descricao) VALUES "
-				+ "(?, ?)";
+		String sql = "INSERT INTO tasks (titulo, descricao, users_id) VALUES "
+				+ "(?, ?, ?)";
 		
 		try {
 			stmt = conn.prepareStatement(sql, StatementImpl.RETURN_GENERATED_KEYS);
 			stmt.setString(1,tasks.getTitulo() );
 			stmt.setString(2,tasks.getDescricao() );
-			//stmt.setDate(3, (java.sql.Date) task.getDataDaTarefa());
+			
+			stmt.setInt(3, tasks.getUser().getId());
+			
 			
 			int linhaAfetada = stmt.executeUpdate();		
 			
@@ -70,13 +73,14 @@ public class DaoTasksImplements implements DaoTasks{
 	@Override
 	public void updateTasks(Tasks task) {
 		PreparedStatement stmt = null;
-		String sql = "UPDATE tasks SET titulo = ?, descrica = ?, data = ? WHERE id = ?";
+		String sql = "UPDATE tasks SET titulo = ?, descrica = ?, data = ?, users_id = ? WHERE id = ?";
 		
 		try {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, task.getTitulo());
 			stmt.setString(2, task.getDescricao());
 			stmt.setDate(3, (java.sql.Date) task.getDataDaTarefa());
+			stmt.setInt(4, task.getUser().getId());
 			
 			int linhaAfetada = stmt.executeUpdate();
 			
@@ -236,7 +240,7 @@ public class DaoTasksImplements implements DaoTasks{
 				
 			}else {
 				
-				throw new DbException("Modificação sem seucesso!");
+				throw new DbException("Modificação sem sucesso!");
 			}
 		
 		
@@ -254,6 +258,12 @@ public class DaoTasksImplements implements DaoTasks{
 	public void updateByDataTasks(Integer id) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Tasks> findByUsers(Users user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

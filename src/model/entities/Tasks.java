@@ -20,7 +20,7 @@ public class Tasks implements Serializable{
 	private Date   dataDaTarefa;
 	private Boolean   doneTask;	
 	
-	private Users user_id;
+	private Users user;
 	
 	//Construtor sem parâmetros, pois permitiremos criar um objeto sem passar seus atributos
 	public Tasks() {
@@ -34,7 +34,7 @@ public class Tasks implements Serializable{
 		this.dataDaTarefa = dataDaTarefa;
 		this.doneTask = doneTask;
 		this.id = id;
-		this.setUser_id(user);
+		this.user = user;
 	}
 	
 	//Getters e Setters para permitir acesso a atributos privados
@@ -85,7 +85,7 @@ public class Tasks implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dataDaTarefa, doneTask, descricao, titulo,id, user_id);
+		return Objects.hash(dataDaTarefa, doneTask, descricao, titulo,id, user);
 	}
 
 	@Override
@@ -99,21 +99,29 @@ public class Tasks implements Serializable{
 		Tasks other = (Tasks) obj;
 		return Objects.equals(dataDaTarefa, other.dataDaTarefa) && Objects.equals(doneTask, other.doneTask)
 				&& Objects.equals(descricao, other.descricao) && Objects.equals(titulo, other.titulo)
-				&& Objects.equals(id, other.id) && Objects.equals(user_id, other.user_id);
+				&& Objects.equals(id, other.id) && Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", titulo: " + titulo + "\n descricao: " + descricao + "\n dataDaTarefa: " + dataDaTarefa
-				+ "\n doneTask: " + doneTask ;
+		String done = "";
+			if(doneTask) {					
+				done =  "Concluída!";
+			}else {
+				
+				done = "Não concluída!";
+			}
+		
+		return "id: " + id + ", \n título: " + titulo + "\n descrição: " + descricao + "\n data da tarefa: " + dataDaTarefa
+				+ "\n status: " + done ;
 	}
 
-	public Users getUser_id() {
-		return user_id;
+	public Users getUser() {
+		return user;
 	}
 
-	public void setUser_id(Users user_id) {
-		this.user_id = user_id;
+	public void setUser(Users user_id) {
+		this.user = user_id;
 	}
 
 	

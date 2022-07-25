@@ -32,6 +32,12 @@ public class Users implements Serializable{
 		this.password = password;
 		this.id = id;
 	}
+	
+	public Users(String nome, Integer id) {		
+		this.nome = nome;
+		this.id = id;
+	}
+	
 	//Getters e Setters para permitir acesso a atributos privados
 	public String getNome() {
 		return nome;

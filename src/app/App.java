@@ -4,82 +4,141 @@ import java.util.Scanner;
 
 import dao.DaoFactory;
 import dao.DaoTasks;
+import dao.DaoUser;
 import model.entities.Tasks;
 import model.entities.Users;
 
 
 
-public class App {
+public class App {	
+	
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-
-		Scanner leiaValores = new Scanner(System.in);
-	
 		
+		
+		Scanner leiaValores = new Scanner(System.in);
 		char opcao = 'o';
 		String nome;
+		String descricao;
 		Integer id;
+		boolean confirmUser = false;
 	
-		//DepartamentoDAO departamentos = DaoFactory.createDepaartamentoDao() ;
+		//Declaração de um dao atual, neste momento   
+		DaoUser currentUser = null;	
+		 Users user = new Users();
 		
-		DaoTasks tasks = DaoFactory.createTasks();
+		//Enquanto o usuário e senha não forem encontrados solicita os dados de entrada
+		while (confirmUser == false) {	
+		//instanciação do dao que tem acesso aos métodos das regras de negócio
+		currentUser = DaoFactory.createUsers();
 		
-		//VendedorDao vendedores = DaoFactory.createSellerDao();
-		
-		System.out.println("Escolha uma opção abaixo: ");
-		System.out.println( "0 - para encerrar o menu: \n" +
-				"1 - para cadastrar uma tarefa: \n"+
-				"2 - para pesquisar por uma tarefa: \n" +
-				"3-  para carregar todos as tarefas: \n" +
-				"4 - para atualziar uma tarefa: \n" + 
-				"5 - para concluir uma tarefa:  \n" +
-				"6 - para deletar uma tarefa:  ");
-		
-		opcao = leiaValores.next().charAt(0);	
-		
-		leiaValores.nextLine();
-		while (opcao != '0') {
+		System.out.println("****************LOGIN***************");
+		   System.out.println("Digite seu Username: ");
+		 String  userName = leiaValores.next();
+		   System.out.println("Digite sua Senha: ");
+		   String password = leiaValores.next();
+		   System.out.println("************************************");
+		 //Verificando se o usuário e senha conferem com os da baase de dados 
+		   confirmUser =  currentUser.authUser(userName, password);		   
+		   
+		   if (confirmUser) {
+			   
+			 user =  currentUser.findUser_id(userName);
 			
-			if (opcao == '1') {
-				
-			Tasks taskEntity = new Tasks();
-			
-			taskEntity.setTitulo("Java");
-			taskEntity.setDescricao("Estudar DAO com jdbc");
-			
-			tasks.insertTasks(taskEntity);
-			
-				/*System.out.println("Digite o nome do novo departamento: ");
-				nome = leiaValores.nextLine();
-				departamentoEntity.setNome(nome);
-				departamentos.insert(departamentoEntity);*/
-				
-			}
-			
-			if (opcao == '5') {
-				tasks.doneTask(1);
-				
-			}
-			
-
-			
-			
-			
-			
-			
-			System.out.println("Escolha uma opção abaixo: ");
-			System.out.println( "0 - para encerrar o menu: \n" +
-								"1 - para cadastrar uma tarefa: \n"+
-								"2 - para pesquisar por uma tarefa: \n" +
-								"3-  para carregar todos as tarefas: \n" +
-								"4 - para atualziar uma tarefa: \n" + 
-								"5 - para concluir uma tarefa:  \n" +
-								"6 - para deletar uma tarefa:  ");
-			
-			opcao = leiaValores.next().charAt(0);	
+			 //id = user.getId();
+		   }
+		   
+		   	if(confirmUser == false) {
+		   		System.out.println("usuário não cadastrado!");
+		   		
+		   	}
 		}
+	
+		
+			
+		
+		//Processo de autenticação para pode abrir o menu de opções			
+		
+			if (confirmUser) {
+				//System.out.println("OK!");
+				DaoTasks tasks = DaoFactory.createTasks();
+				
+				System.out.println("************************************");
+				System.out.println("************************************");
+				System.out.println("************************************");
+				System.out.println("************************************");
+				System.out.println("Escolha uma opção abaixo: ");
+				System.out.println( "0 - para encerrar o menu: \n" +
+						"1 - para cadastrar uma tarefa: \n"+
+						"2 - para pesquisar por uma tarefa: \n" +
+						"3-  para carregar todos as tarefas: \n" +
+						"4 - para atualziar uma tarefa: \n" + 
+						"5 - para concluir uma tarefa:  \n" +
+						"6 - para deletar uma tarefa:  ");
+				
+				opcao = leiaValores.next().charAt(0);	
+				
+				leiaValores.nextLine();
+				while (opcao != '0') {
+					
+					if (opcao == '1') {
+						
+					Tasks taskEntity = new Tasks();
+					
+					System.out.println("Digite o título da tarefa: ");
+					nome = leiaValores.nextLine();
+					System.out.println("Digite a descrição desta tarefa: ");
+					descricao = leiaValores.nextLine();
+					
+					taskEntity.setTitulo(nome);
+					taskEntity.setDescricao(descricao);
+					taskEntity.setUser(user);
+					
+					tasks.insertTasks(taskEntity);			
+						
+					}
+					
+					if (opcao == '2') {
+						
+						System.out.println("Digite o id da tarefa: ");
+						id = leiaValores.nextInt();
+						
+						Tasks taskEntity = new Tasks();
+						
+						 taskEntity = tasks.findById(id);
+						System.out.println(taskEntity.toString());
+					}
+					
+					if (opcao == '5') {
+						tasks.doneTask(1);
+						
+					}
+					
+
+					
+					
+					
+					System.out.println("************************************");
+					System.out.println("************************************");
+					System.out.println("Escolha uma opção abaixo: ");
+					System.out.println( "0 - para encerrar o menu: \n" +
+										"1 - para cadastrar uma tarefa: \n"+
+										"2 - para pesquisar por uma tarefa: \n" +
+										"3-  para carregar todos as tarefas: \n" +
+										"4 - para atualziar uma tarefa: \n" + 
+										"5 - para concluir uma tarefa:  \n" +
+										"6 - para deletar uma tarefa:  ");
+					
+					opcao = leiaValores.next().charAt(0);	
+					System.out.println("************************************");
+					System.out.println("************************************");
+				}
+				
+			}
+			
+			
+		
+		
 		
 		
 	}
