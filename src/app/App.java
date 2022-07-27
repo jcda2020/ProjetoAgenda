@@ -83,31 +83,43 @@ public class App {
 				opcao = leiaValores.next().charAt(0);	
 				
 				leiaValores.nextLine();
+				
 				while (opcao != '0') {
-					leiaValores.nextLine();
+					
 					if (opcao == '1') {
 						
-					Tasks taskEntity = new Tasks();
+
+						Tasks taskEntity = new Tasks();
 					
 					System.out.println("Digite o título da tarefa: ");
 					nome = leiaValores.nextLine();
+					leiaValores.next();
+					
+					System.out.println("Digite a data desta tarefa: ");
+					//Recebe a data como String
+					String dataString = leiaValores.next();
+						
+					
+					
 					
 					System.out.println("Digite a descrição desta tarefa: ");
 					descricao = leiaValores.nextLine();
 					
-					System.out.println("Digite a data desta tarefa: ");
-					String dataString = leiaValores.next();
+					
+					
+					//Formata a data 
 					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+					//Declara  um tipo java.util.Date
+					Date dt = null;
+					//Transforma uma String num tipo java.util.Date
+					dt = formatter.parse(dataString);
 					
-					java.util.Date dataTareFormata =  formatter.parse(dataString);
-					Date dataTareFormata2 = new  java.util.Date(dataTareFormata.getTime());
+				
 					
-					java.sql.Date dataSql = new java.sql.Date(dataTareFormata2.getTime());
-					Date dt = new Date();
 					taskEntity.setTitulo(nome);
 					taskEntity.setDescricao(descricao);
 					taskEntity.setUser(user);
-					taskEntity.setDataDaTarefa(dataSql);
+					taskEntity.setDataDaTarefa(dt);
 					
 					//O objeto da classe que implementa a interface aciona o insertTasks e enviar o objeto a ser inserido no banco de dados, que lá será um registro (uma linha na tabela) 
 					tasks.insertTasks(taskEntity);			

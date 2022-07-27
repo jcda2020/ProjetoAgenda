@@ -83,6 +83,7 @@ public class DaoTasksImplements implements DaoTasks{
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, task.getTitulo());
 			stmt.setString(2, task.getDescricao());
+			//Instacia um objeto java.sql.Date e faz uma get da data passada na digitação para o objeto task
 			stmt.setDate(3, new Date(task.getDataDaTarefa().getTime()));
 			stmt.setInt(4, task.getUser().getId());
 			
