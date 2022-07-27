@@ -1,5 +1,8 @@
 package app;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import dao.DaoFactory;
@@ -13,7 +16,8 @@ import model.entities.Users;
 public class App {	
 	
 
-	public static void main(String[] args) {
+	@SuppressWarnings("deprecation")
+	public static void main(String[] args) throws ParseException {
 		
 		
 		Scanner leiaValores = new Scanner(System.in);
@@ -80,20 +84,32 @@ public class App {
 				
 				leiaValores.nextLine();
 				while (opcao != '0') {
-					
+					leiaValores.nextLine();
 					if (opcao == '1') {
 						
 					Tasks taskEntity = new Tasks();
 					
 					System.out.println("Digite o título da tarefa: ");
 					nome = leiaValores.nextLine();
+					
 					System.out.println("Digite a descrição desta tarefa: ");
 					descricao = leiaValores.nextLine();
 					
+					System.out.println("Digite a data desta tarefa: ");
+					String dataString = leiaValores.next();
+					SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+					
+					java.util.Date dataTareFormata =  formatter.parse(dataString);
+					Date dataTareFormata2 = new  java.util.Date(dataTareFormata.getTime());
+					
+					java.sql.Date dataSql = new java.sql.Date(dataTareFormata2.getTime());
+					Date dt = new Date();
 					taskEntity.setTitulo(nome);
 					taskEntity.setDescricao(descricao);
 					taskEntity.setUser(user);
+					taskEntity.setDataDaTarefa(dataSql);
 					
+					//O objeto da classe que implementa a interface aciona o insertTasks e enviar o objeto a ser inserido no banco de dados, que lá será um registro (uma linha na tabela) 
 					tasks.insertTasks(taskEntity);			
 						
 					}

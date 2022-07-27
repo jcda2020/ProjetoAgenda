@@ -59,8 +59,8 @@ public class Tasks implements Serializable{
 		return dataDaTarefa;
 	}
 
-	public void setDataDaTarefa(Date dataDaTarefa) {
-		this.dataDaTarefa = dataDaTarefa;
+	public void setDataDaTarefa(Date dt) {
+		this.dataDaTarefa = dt;
 	}
 
 	public Boolean getDoneTask() {

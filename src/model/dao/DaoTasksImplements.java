@@ -15,6 +15,8 @@ import db.DbException;
 import model.entities.Tasks;
 import model.entities.Users;
 
+import java.sql.Date;
+
 public class DaoTasksImplements implements DaoTasks{
 
 	private Connection conn;
@@ -32,15 +34,15 @@ public class DaoTasksImplements implements DaoTasks{
 	@Override
 	public void insertTasks(Tasks tasks) {
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO tasks (titulo, descricao,data, users_id) VALUES "
+		String sql = "INSERT INTO tasks (titulo, descricao, data, users_id) VALUES "
 				+ "(?, ?, ?, ?)";
-		
+		//new java.sql.Date(tasks.getDataDaTarefa()
 		try {
 			stmt = conn.prepareStatement(sql, StatementImpl.RETURN_GENERATED_KEYS);
 			stmt.setString(1,tasks.getTitulo() );
 			stmt.setString(2,tasks.getDescricao() );
 			stmt.setDate(3, new java.sql.Date(tasks.getDataDaTarefa().getTime()));
-			stmt.setInt(3, tasks.getUser().getId());
+			stmt.setInt(4, tasks.getUser().getId());
 			
 			
 			int linhaAfetada = stmt.executeUpdate();		
@@ -76,10 +78,12 @@ public class DaoTasksImplements implements DaoTasks{
 		String sql = "UPDATE tasks SET titulo = ?, descrica = ?, data = ?, users_id = ? WHERE id = ?";
 		
 		try {
+			
+			
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, task.getTitulo());
 			stmt.setString(2, task.getDescricao());
-			stmt.setDate(3, (java.sql.Date) task.getDataDaTarefa());
+			stmt.setDate(3, new Date(task.getDataDaTarefa().getTime()));
 			stmt.setInt(4, task.getUser().getId());
 			
 			int linhaAfetada = stmt.executeUpdate();
