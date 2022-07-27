@@ -32,14 +32,14 @@ public class DaoTasksImplements implements DaoTasks{
 	@Override
 	public void insertTasks(Tasks tasks) {
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO tasks (titulo, descricao, users_id) VALUES "
-				+ "(?, ?, ?)";
+		String sql = "INSERT INTO tasks (titulo, descricao,data, users_id) VALUES "
+				+ "(?, ?, ?, ?)";
 		
 		try {
 			stmt = conn.prepareStatement(sql, StatementImpl.RETURN_GENERATED_KEYS);
 			stmt.setString(1,tasks.getTitulo() );
 			stmt.setString(2,tasks.getDescricao() );
-			
+			stmt.setDate(3, new java.sql.Date(tasks.getDataDaTarefa().getTime()));
 			stmt.setInt(3, tasks.getUser().getId());
 			
 			
