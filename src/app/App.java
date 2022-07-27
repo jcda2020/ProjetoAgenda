@@ -100,6 +100,7 @@ public class App {
 					String dataString = leiaValores.next();
 						
 					
+					leiaValores.nextLine();  // Consume newline left-over
 					
 					
 					System.out.println("Digite a descrição desta tarefa: ");
