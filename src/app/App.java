@@ -91,16 +91,16 @@ public class App {
 
 						Tasks taskEntity = new Tasks();
 					
-					System.out.println("Digite o título da tarefa: ");
+					System.out.println("Título da tarefa: ");
 					nome = leiaValores.nextLine();
-					leiaValores.next();
+				
 					
 					System.out.println("Digite a data desta tarefa: ");
 					//Recebe a data como String
 					String dataString = leiaValores.next();
 						
 					
-					//leiaValores.nextLine();  // Consume newline left-over
+					leiaValores.nextLine();  // Consume newline left-over
 					
 					
 					System.out.println("Digite a descrição desta tarefa: ");
