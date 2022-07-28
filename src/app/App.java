@@ -100,7 +100,7 @@ public class App {
 					String dataString = leiaValores.next();
 						
 					
-					leiaValores.nextLine();  // Consume newline left-over
+					//leiaValores.nextLine();  // Consume newline left-over
 					
 					
 					System.out.println("Digite a descrição desta tarefa: ");
@@ -139,7 +139,9 @@ public class App {
 					}
 					
 					if (opcao == '5') {
-						tasks.doneTask(1);
+						System.out.println("Digite o id da tarefa a ser concluída: ");
+						id = leiaValores.nextInt();
+						tasks.doneTask(id);
 						
 					}
 					
@@ -161,6 +163,7 @@ public class App {
 					opcao = leiaValores.next().charAt(0);	
 					System.out.println("************************************");
 					System.out.println("************************************");
+					leiaValores.nextLine();
 				}
 				
 			}
