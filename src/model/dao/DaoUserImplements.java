@@ -110,7 +110,20 @@ public class DaoUserImplements implements DaoUser{
 	@Override
 	public void insertUsers(Users user) {
 		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO users ( userName, password) VALUES "
+				+ "(?, ?)";
 		
+		try {
+			stmt.setString(1, user.getUserName());
+			stmt.setString(1, user.getPassword());
+			stmt = conn.prepareStatement(sql);
+			
+			stmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 

@@ -2,7 +2,9 @@ package app;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import dao.DaoFactory;
@@ -138,11 +140,31 @@ public class App {
 						System.out.println(taskEntity.toString());
 					}
 					
+					if (opcao == '3') {
+						List<Tasks> tarefas = new ArrayList<>();
+						
+						
+						tarefas.addAll(tasks.findAll());
+						Tasks taskEntities = new Tasks();
+						
+						for (Tasks tasks2 : tarefas) {
+							System.out.println(tasks2);
+						}
+						
+					}
+					
+					
 					if (opcao == '5') {
 						System.out.println("Digite o id da tarefa a ser concluída: ");
 						id = leiaValores.nextInt();
 						tasks.doneTask(id);
 						
+					}
+					
+					if (opcao == '6') {
+						System.out.println("Digite o id da tarefa a ser concluída: ");
+						id = leiaValores.nextInt();
+						tasks.deleteTask(id);
 					}
 					
 
@@ -156,7 +178,7 @@ public class App {
 										"1 - para cadastrar uma tarefa: \n"+
 										"2 - para pesquisar por uma tarefa: \n" +
 										"3-  para carregar todos as tarefas: \n" +
-										"4 - para atualziar uma tarefa: \n" + 
+										"4 - para atualizar uma tarefa: \n" + 
 										"5 - para concluir uma tarefa:  \n" +
 										"6 - para deletar uma tarefa:  ");
 					

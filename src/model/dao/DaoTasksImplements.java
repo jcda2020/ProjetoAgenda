@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mysql.cj.jdbc.StatementImpl;
@@ -83,7 +84,7 @@ public class DaoTasksImplements implements DaoTasks{
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, task.getTitulo());
 			stmt.setString(2, task.getDescricao());
-			//Instacia um objeto java.sql.Date e faz uma get da data passada na digitação para o objeto task
+			//Instacia um objeto java.sql.Date e faz uma get da data passada na digitaï¿½ï¿½o para o objeto task
 			stmt.setDate(3, new Date(task.getDataDaTarefa().getTime()));
 			stmt.setInt(4, task.getUser().getId());
 			
@@ -92,9 +93,9 @@ public class DaoTasksImplements implements DaoTasks{
 			
 			if(linhaAfetada > 0) {
 				
-				System.out.println("Alteração realizada com sucesso!");					
+				System.out.println("Alteraï¿½ï¿½o realizada com sucesso!");					
 			}else {
-				throw new DbException("Alteração não realizada!");
+				throw new DbException("Alteraï¿½ï¿½o nï¿½o realizada!");
 			}
 			
 			
@@ -118,7 +119,7 @@ public class DaoTasksImplements implements DaoTasks{
 		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, id);
 		
-		//Verificar se houve linha afetada, pois pode acontecer de o id passado não existir no banco
+		//Verificar se houve linha afetada, pois pode acontecer de o id passado nï¿½o existir no banco
 		int linhaAfetada = stmt.executeUpdate();
 		
 		if (linhaAfetada == 0) {
@@ -132,7 +133,7 @@ public class DaoTasksImplements implements DaoTasks{
 					System.out.println("ID existente na base de dados!");
 					break;
 				}else {
-					throw new DbException("ID não existente na base de dados!");
+					throw new DbException("ID nï¿½o existente na base de dados!");
 				}
 			}
 			
@@ -190,7 +191,7 @@ public class DaoTasksImplements implements DaoTasks{
 	@SuppressWarnings("null")
 	@Override
 	public List<Tasks> findAll() {
-		List<Tasks> tarefas = null;
+		List<Tasks> tarefas = new ArrayList<>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String sql = "SELECT * FROM tasks";	
@@ -199,9 +200,11 @@ public class DaoTasksImplements implements DaoTasks{
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			
-			Tasks task = new Tasks();
 			
+		
 			while (rs.next()) {
+				Tasks task = new Tasks();
+				
 				task.setId(rs.getInt("id"));
 				task.setDataDaTarefa(rs.getDate("data"));
 				task.setTitulo(rs.getString("titulo"));
@@ -245,7 +248,7 @@ public class DaoTasksImplements implements DaoTasks{
 				
 			}else {
 				
-				throw new DbException("Modificação sem sucesso!");
+				throw new DbException("Modificaï¿½ï¿½o sem sucesso!");
 			}
 		
 		
